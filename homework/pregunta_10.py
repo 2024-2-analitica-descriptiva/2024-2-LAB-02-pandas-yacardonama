@@ -4,7 +4,7 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 `tbl2.tsv`. En este laboratorio solo puede utilizar las funciones y 
 librerias de pandas para resolver las preguntas.
 """
-
+import pandas as pd
 
 def pregunta_10():
     """
@@ -20,3 +20,20 @@ def pregunta_10():
     D                   1:2:3:5:5:7
     E   1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
+    t0 = pd.read_csv('./files/input/tbl0.tsv', sep='\t')
+
+    def ordernar_unir(df):
+        ordenar= sorted(df)
+        unir= ":".join(map(str,ordenar))
+        return unir
+        
+    lista_c2_c1= t0.groupby('c1')['c2'].apply(ordernar_unir)
+
+    con_indice = lista_c2_c1.reset_index()
+    con_indice.columns= ['c1','c2']
+    con_indice=con_indice.set_index('c1')
+    return con_indice
+
+if __name__=="__main__":
+    
+    print(pregunta_10())
